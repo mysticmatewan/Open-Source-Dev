@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Library Search</title>
+    <link rel="stylesheet" href="style.css">
+	<style>
+	* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #333;
+    background-color: #333;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+</style>
+</head>
+<body>
+
+    <h1>Search the WorldCat Database</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchQuery" placeholder="Search books, articles, etc.">
+        <button onclick="searchWorldCat()">Search</button>
+    </div>
+
+    <script>function searchWorldCat() {
+    // Get the search query from the input field
+    const query = document.getElementById("searchQuery").value;
+
+    // Check if the input is not empty
+    if (query) {
+        // Encode the query to be used in a URL
+        const encodedQuery = encodeURIComponent(query);
+
+        // Redirect to the WorldCat search results page with the user's query
+        window.location.href = `https://www.worldcat.org/search?q=${encodedQuery}`;
+    } else {
+        alert("Please enter a search query.");
+    }
+}
+</script>
+
+</body>
+</html>
