@@ -3,4 +3,3 @@
 *.cpp linguist-vendored=true
 *.py linguist-vendored=true
 *.php linguist-vendored=true
-*.css linguist-vendored=true
