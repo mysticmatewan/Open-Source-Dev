@@ -2,4 +2,4 @@
 *.js linguist-vendored=false
 *.cpp linguist-vendored=false
 *.py linguist-vendored=false
-*.html linguist-vendored=false
+*.php linguist-vendored=false
