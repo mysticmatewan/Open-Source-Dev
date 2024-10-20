@@ -1,7 +1,6 @@
 * linguist-vendored
-*.js linguist-vendored=true
-*.cpp linguist-vendored=true
-*.py linguist-vendored=true
-*.php linguist-vendored=true
-
+*.js linguist-vendored=false
+*.cpp linguist-vendored=false
+*.py linguist-vendored=false
+*.php linguist-vendored=false
 
