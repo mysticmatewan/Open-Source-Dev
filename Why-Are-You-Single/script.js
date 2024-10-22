@@ -5,7 +5,7 @@ function showReason() {
         "I like my freedom and space.",
         "Programming takes up all my time!",
         "I'm too picky with my choices.",
-        "I haven't met anyone who likes JavaScript as much as I do!"
+        "I haven't met anyone who likes JavaScript as much as I do!",
         "Oghe toksey nga kawe, kesit sokmo..."
     ];
 
