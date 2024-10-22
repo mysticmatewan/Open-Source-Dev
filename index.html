@@ -233,30 +233,6 @@ button:hover {
              <p class="idx-Subtitle"></p> </ul> <br>
 			 <p class="idx-Subtitle">/* My writings <br>and<br> theorems */</p><br>
 			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle">1. Syazwan's Journal</a>    
-
-	<script>
-        // Function to check if an element is in the viewport
-        function isInViewport(element) {
-            const rect = element.getBoundingClientRect();
-            return rect.top < window.innerHeight && rect.bottom >= 0;
-        }
-
-        // Function to handle scroll event and apply 'show' class when elements are visible
-        function handleScroll() {
-            const subtitles = document.querySelectorAll('.idx-Subtitle');
-            subtitles.forEach(subtitle => {
-                if (isInViewport(subtitle)) {
-                    subtitle.classList.add('show');
-                }
-            });
-        }
-
-        // Run the handleScroll function when the page is scrolled
-        window.addEventListener('scroll', handleScroll);
-
-        // Run the function initially to animate elements already in the viewport on load
-        handleScroll();
-    </script>
 	  </div>
         </div>
       </div>
