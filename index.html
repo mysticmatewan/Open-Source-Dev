@@ -235,24 +235,27 @@ button:hover {
 			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle">1. Syazwan's Journal</a>    
 
 	<script>
-        // Select all elements with class 'idx-Subtitle'
-        const subtitles = document.querySelectorAll('.idx-Subtitle');
+        // Function to check if an element is in the viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top < window.innerHeight && rect.bottom >= 0;
+        }
 
-        // Create an Intersection Observer to trigger the animation when elements are in view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show'); // Add 'show' class when the element is in view
+        // Function to handle scroll event and apply 'show' class when elements are visible
+        function handleScroll() {
+            const subtitles = document.querySelectorAll('.idx-Subtitle');
+            subtitles.forEach(subtitle => {
+                if (isInViewport(subtitle)) {
+                    subtitle.classList.add('show');
                 }
             });
-        }, {
-            threshold: 0.1 // Trigger when 10% of the element is visible
-        });
+        }
 
-        // Observe each 'idx-Subtitle' element
-        subtitles.forEach(subtitle => {
-            observer.observe(subtitle);
-        });
+        // Run the handleScroll function when the page is scrolled
+        window.addEventListener('scroll', handleScroll);
+
+        // Run the function initially to animate elements already in the viewport on load
+        handleScroll();
     </script>
 	  </div>
         </div>
