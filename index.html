@@ -232,7 +232,28 @@ button:hover {
             <ul class="sw-List small">
              <p class="idx-Subtitle"></p> </ul> <br>
 			 <p class="idx-Subtitle">/* My writings <br>and<br> theorems */</p><br>
-			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle">1. Syazwan's Journal</a>            
+			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle">1. Syazwan's Journal</a>    
+
+	<script>
+        // Select all elements with class 'idx-Subtitle'
+        const subtitles = document.querySelectorAll('.idx-Subtitle');
+
+        // Create an Intersection Observer to trigger the animation when elements are in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show'); // Add 'show' class when the element is in view
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+
+        // Observe each 'idx-Subtitle' element
+        subtitles.forEach(subtitle => {
+            observer.observe(subtitle);
+        });
+    </script>
 	  </div>
         </div>
       </div>
