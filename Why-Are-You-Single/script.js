@@ -6,6 +6,7 @@ function showReason() {
         "Programming takes up all my time!",
         "I'm too picky with my choices.",
         "I haven't met anyone who likes JavaScript as much as I do!"
+        "Oghe toksey nga kawe, kesit sokmo..."
     ];
 
     var randomIndex = Math.floor(Math.random() * reasons.length);
