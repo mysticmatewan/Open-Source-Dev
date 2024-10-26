@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4th Dimension Visualisation</title>
+	<link rel="icon" type="image/x-icon" href="/images/icon.webp">
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+    <style>
+	 /* General Styles */
+body {
+    font-family: 'Josefin Slab', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+/* Container for Centering */
+.container {
+    margin: auto;
+    max-width: 700px;
+    text-align: center;
+}
+
+/* Canvas Styling */
+canvas {
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #333;
+}
+
+/* Explanation Section */
+#explanation {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2, h3 {
+    color: #e2007f;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #000000;
+    line-height: 1.6;
+}
+
+code {
+    background-color: #eee;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* Centering content */
+.content {
+    text-align: center;
+    margin: auto;
+}
+
+/* Styling for heading */
+h1 {
+    color: #e2007f;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Styling for button */
+button {
+    font-family: 'Josefin Slab', serif;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #e2007f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #333;
+}
+    </style>
+</head>
+<body>
+<div class="content">
+    <h1>4th Dimension Visualisation</h1>
+	<div class="container">
+        <canvas id="myCanvas" width="600" height="400"></canvas>
+        
+        <div id="explanation">
+            <h2>Explanation of 3D and 4D Representation</h2>
+            <p>This visualization demonstrates the concept of the 4th dimension as time, affecting an object's movement through 3D space. Here’s how each component of the display corresponds to different dimensions:</p>
+            
+            <h3>3D Space (X and Y Axes)</h3>
+            <p>The grid on the canvas represents the X and Y axes of 3D space. This grid allows us to see where the point lies in 2D, simulating a position in 3D space (X, Y).</p>
+            
+            <h3>Line (y = mx + c)</h3>
+            <p>The red line represents a static mathematical line in 3D space, following the formula <code>y = mx + c</code>. This line doesn’t change with time and remains a fixed point of reference, like an object that doesn't move in space.</p>
+            
+            <h3>4th Dimension: Time</h3>
+            <p>The blue point represents an object moving through space over time. The position of this point changes based on time <code>t</code> and is calculated using trigonometric functions (sine and cosine). As time progresses, the point’s position shifts, showing how it would "move" through 4D space (X, Y, and time).</p>
+            
+            <h3>Why This Simulates Time Travel</h3>
+            <p>In theory, if one could control their position in time, they could "travel" to different moments. The motion here demonstrates how an object would look if it could move freely through time, making time a visible, dynamic element rather than a fixed one.</p>
+        </div>
+    </div>
+    <script src="4dVisualization.js"></script>
+	<button onclick="openExplanation()">What is the 4th Dimension?</button>
+
+    <script>
+        function openExplanation() {
+            // Open a new window with specified dimensions
+            const explanationWindow = window.open("", "_blank", "width=600,height=400");
+
+            // Write HTML content into the new window
+            explanationWindow.document.write(`
+                <html>
+                <head><link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@400;700&display=swap" rel="stylesheet">
+                    <title>Understanding the 4th Dimension</title>
+                    <style>
+                        background-color: #333; /* Dark background */
+    color: #ffffff; /* Light text for readability */
+                        h2 { color: #FFFFFF; }
+                        p {  color: #e2007f; line-height: 1.5; }
+                    </style>
+                </head>
+                <body>
+                    <h2>The 4th Dimension Explained</h2>
+                    <p>In our daily lives, we experience three dimensions:</p>
+                    <ul>
+                        <li><strong>Length (X-axis)</strong></li>
+                        <li><strong>Width (Y-axis)</strong></li>
+                        <li><strong>Height (Z-axis)</strong></li>
+                    </ul>
+                    <p>The <strong>4th dimension</strong> adds the element of <em>time</em> (T-axis).</p>
+                    <p>In the theory of relativity, time is considered a dimension, forming a concept called <strong>space-time</strong> together with the three spatial dimensions.</p>
+                    <p>Objects in the 4th dimension have movement through time, which can change their state or position over time even if they seem fixed in 3D space.</p>
+                    <p>Understanding this dimension opens up ideas about time travel, although it is still a theoretical concept today.</p>
+                </body>
+                </html>
+            `);
+
+            // Close the document stream to finish loading
+            explanationWindow.document.close();
+        }
+    </script>
+</div>
+</body>
+</html>
