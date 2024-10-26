@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.text-container {
+    font-size: 2rem;
+    white-space: nowrap;
+    overflow: hidden; /* Keep overflow hidden during the animation */
+    border-right: 0.15em solid #fff; /* Cursor effect */
+    display: inline-block;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent; /* Hide the cursor for half of the time */
+    }
+}
