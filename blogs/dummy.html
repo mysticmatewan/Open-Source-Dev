@@ -414,7 +414,7 @@ p.general {
                 <img class="vertical-decoration top" src="https://i.ibb.co/JRTK9z4/horizontally-centered-vertical-decoration.png" alt="Top Decoration">
                 <img class="vertical-decoration bottom" src="https://i.ibb.co/JRTK9z4/horizontally-centered-vertical-decoration.png" alt="Bottom Decoration">
                 <div class="iframe-container" style="margin-top: 20px;">
-                                <iframe id="jojoIframe" src="iframe/dummyblog1.html" width="" height="" style="border:none;"></iframe>
+                                <iframe id="jojoIframe" src="iframe/dummyblog1.html" width="90%" height="" style="border:none;"></iframe>
                             </div>
                 <!-- Page Content -->
                 <div class="container">
@@ -436,8 +436,15 @@ p.general {
         const iframe = document.getElementById('jojoIframe');
         iframe.onload = () => {
             const contentDocument = iframe.contentWindow.document;
-            iframe.style.height = contentDocument.body.scrollHeight + 'px';
-            iframe.style.width = contentDocument.body.scrollWidth + 'px'; // Adjust width
+            const height = contentDocument.body.scrollHeight;
+            const width = contentDocument.body.scrollWidth;
+
+            iframe.style.height = height + 'px';
+            iframe.style.width = width + 'px'; // Adjust width
+
+            // Centering the iframe after size adjustment
+            iframe.style.top = `calc(50% - ${height / 2}px)`;
+            iframe.style.left = `calc(50% - ${width / 2}px)`;
         };
     </script>
 		<div class="sw-Breadcrumb">
