@@ -416,6 +416,19 @@ a:active {
     }
 }
 
+.category:hover {
+  transform: translate(0,0);
+  clip-path: 
+    polygon(
+     0% var(--d), 
+     var(--d) 0%, 
+     100% 0%, 
+     100% calc(100% - var(--d)), 
+     calc(100% - var(--d)) 100%, 
+     0% 100%
+   );
+}
+
 @media (max-width: 600px) {
     .category {
         flex: 1 1 100%; /* Full width on small screens */
