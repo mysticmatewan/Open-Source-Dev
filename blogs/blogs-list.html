@@ -416,9 +416,37 @@ a:active {
     }
 }
 	
+/* Hover effect with darker shade */
 .category:hover {
-  color: #4c00b0; /* Darker shade on hover */
-  text-decoration: underline;
+  color: #4c00b0; /* Darker purple shade on hover */
+}
+
+/* Underline effect */
+.category:before {
+  content: "";
+  position: absolute;
+  inset: calc(100% - 0.5px) 0 0 0; /* 3px thickness underline */
+  background: #ce4f20; /* underline colour */
+  scale: 0 1;
+  transition: scale 0.3s, translate 0s 0.3s;
+}
+
+/* Expands underline on hover */
+.category:hover:before {
+  scale: 1;
+  translate: 0;
+  transition: scale 0.3s;
+}
+
+/* Adjusts underline transitions on sibling hover */
+.category:hover ~ .category:before {
+  translate: 100% 0;
+  transition: translate 0.2s 0.2s, scale 0s 0.4s;
+}
+
+.category:has(~ .category:hover):before {
+  translate: -100% 0;
+  transition: translate 0.2s 0.2s, scale 0s 0.4s;
 }
 
 @media (max-width: 600px) {
