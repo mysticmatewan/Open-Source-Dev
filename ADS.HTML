@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exit Intent Popup Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        #exitPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Welcome to Our Website!</h1>
+<p>We're glad you're here. Feel free to explore our content. If you have any questions, don't hesitate to reach out!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at ligula id velit ultricies luctus. Suspendisse potenti.</p>
+<p>Enjoy your stay, and don’t forget to check out our special offers!</p>
+
+<a href="https://external-website.com/page1" class="external-link">Visit External Page 1</a><br>
+<a href="https://external-website.com/page2" class="external-link">Visit External Page 2</a><br>
+<a href="https://external-website.com/page3" class="external-link">Visit External Page 3</a><br>
+
+<div id="overlay"></div>
+<div id="exitPopup">
+    <button class="closeBtn" id="closeBtn">×</button>
+    <h2>Wait! Check this out!</h2>
+    <a id="adLink" href="#" target="_blank">
+        <img id="adImage" src="https://via.placeholder.com/300x200" alt="Ad" style="max-width: 100%; height: auto;">
+    </a>
+    <p>Would you like to visit our special offers page?</p>
+    <button id="noBtn">No, Thanks!</button>
+</div>
+
+<script>
+    // Array of objects containing image sources and links
+    const ads = [
+        { src: 'https://via.placeholder.com/300x200?text=Ad+1', link: 'https://external-website.com/page1' },
+        { src: 'https://via.placeholder.com/300x200?text=Ad+2', link: 'https://external-website.com/page2' },
+        { src: 'https://via.placeholder.com/300x200?text=Ad+3', link: 'https://external-website.com/page3' },
+        { src: 'https://via.placeholder.com/300x200?text=Ad+4', link: 'https://external-website.com/page4' },
+        { src: 'https://via.placeholder.com/300x200?text=Ad+5', link: 'https://external-website.com/page5' },
+        // Add more images and links as needed
+        { src: 'https://via.placeholder.com/300x200?text=Ad+30', link: 'https://external-website.com/page30' },
+    ];
+
+    let isPopupShown = false;
+
+    // Function to show the exit popup
+    function showExitPopup() {
+        const randomAd = ads[Math.floor(Math.random() * ads.length)];
+        document.getElementById('adImage').src = randomAd.src;
+        document.getElementById('adLink').href = randomAd.link;
+
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('exitPopup').style.display = 'block';
+    }
+
+    // Show popup on mouse leave
+    document.addEventListener('mouseleave', function(event) {
+        if (event.clientY < 0 && !isPopupShown) {
+            showExitPopup();
+            isPopupShown = true;
+        }
+    });
+
+    // Show popup on link click
+    document.querySelectorAll('.external-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default link action
+            showExitPopup(); // Show the popup instead
+        });
+    });
+
+    // Close popup actions
+    document.getElementById('noBtn').addEventListener('click', closePopup);
+    document.getElementById('closeBtn').addEventListener('click', closePopup);
+
+    function closePopup() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('exitPopup').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
