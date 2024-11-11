@@ -317,9 +317,16 @@ button:hover {
         // Function to show the exit popup
         function showExitPopup() {
             const randomAd = ads[Math.floor(Math.random() * ads.length)];
+
+            // Log the random ad to check if the src is correct
+            console.log(randomAd.src);
+
+            // Set the ad image src dynamically
             document.getElementById('adImage').src = randomAd.src;
+
+            // Set the ad link dynamically
             const adLink = document.getElementById('adLink');
-            adLink.href = randomAd.link; // Set the ad link dynamically
+            adLink.href = randomAd.link;
 
             // Store the pending link that the user was trying to visit
             pendingLink = randomAd.link;
