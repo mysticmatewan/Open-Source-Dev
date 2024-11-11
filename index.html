@@ -302,7 +302,6 @@ button:hover {
 </div>
   <script>
     // Array of objects containing image sources and links
-// Array of objects containing image sources and links
         const ads = [
             { src: 'https://via.placeholder.com/300x200?text=Ad+1', link: 'https://external-website.com/page1' },
             { src: 'https://via.placeholder.com/300x200?text=Ad+2', link: 'https://external-website.com/page2' },
@@ -337,8 +336,13 @@ button:hover {
         // Show popup on link click
         document.querySelectorAll('.external-link').forEach(link => {
             link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default link action
+                event.preventDefault(); // Prevent the default link action (temporarily)
                 showExitPopup(); // Show the popup instead
+
+                // After a short delay, allow the link to proceed
+                setTimeout(() => {
+                    window.location.href = link.href; // Redirect to the original link after the popup is shown
+                }, 300); // Small delay to show the popup before navigation
             });
         });
 
@@ -359,7 +363,7 @@ button:hover {
                 window.location.href = adUrl; // Redirect the user to the ad URL
             }, 100); // Small delay to make the redirection work after closing the popup
         });
-
+	  
 </script>
 </body>
 </html>
