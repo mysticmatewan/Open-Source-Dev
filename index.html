@@ -312,6 +312,7 @@ button:hover {
         ];
 
         let isPopupShown = false;
+        let pendingLink = null; // Store the pending link until user interacts with popup
 
         // Function to show the exit popup
         function showExitPopup() {
@@ -319,6 +320,9 @@ button:hover {
             document.getElementById('adImage').src = randomAd.src;
             const adLink = document.getElementById('adLink');
             adLink.href = randomAd.link; // Set the ad link dynamically
+
+            // Store the pending link that the user was trying to visit
+            pendingLink = randomAd.link;
 
             // Display the overlay and popup
             document.getElementById('overlay').style.display = 'block';
@@ -339,10 +343,8 @@ button:hover {
                 event.preventDefault(); // Prevent the default link action (temporarily)
                 showExitPopup(); // Show the popup instead
 
-                // After a short delay, allow the link to proceed
-                setTimeout(() => {
-                    window.location.href = link.href; // Redirect to the original link after the popup is shown
-                }, 300); // Small delay to show the popup before navigation
+                // Save the link to be opened later
+                pendingLink = link.href;
             });
         });
 
@@ -354,13 +356,19 @@ button:hover {
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('exitPopup').style.display = 'none';
+
+            // After closing the popup, allow the user to proceed with the link
+            if (pendingLink) {
+                window.open(pendingLink, '_blank'); // Open the pending link in a new tab
+                pendingLink = null; // Reset the pending link
+            }
         }
 
         // Allow the user to click the "Visit Offer" button after the popup is shown
         document.getElementById('adLink').addEventListener('click', function(event) {
             const adUrl = event.target.href; // Get the URL of the ad
             setTimeout(function() {
-                window.location.href = adUrl; // Redirect the user to the ad URL
+                window.open(adUrl, '_blank'); // Open the ad URL in a new tab
             }, 100); // Small delay to make the redirection work after closing the popup
         });
 	  
