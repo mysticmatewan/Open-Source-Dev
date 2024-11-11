@@ -243,17 +243,17 @@ button:hover {
 		  <h2 class="idx-Subtitle">Check My Github Repo for Works!</h2>
             <ul class="sw-List small">
               </ul><br>
-			 <a href="https://beacons.ai/theworldisbeautiful" class="idx-Subtitle .external-link" >// This is an affiliate</a><br>
-                  <a href="https://github.com/mysticmatewan" class="idx-Subtitle .external-link" >0. Github</a>
-		  <a href="https://banpraong.netlify.app" class="idx-Subtitle .external-link" >1. Banpraong</a> 
-			 <a href="https://banpraong-blog.blogspot.com/" class="idx-Subtitle .external-link" >2. Banpraong-Blog</a>
-			 <a href="https://rygwan.blogspot.com/" class="idx-Subtitle .external-link">3. Madwem</a>
-                         <a href="https://mysticmatewan.github.io/Virtual-Chords-Scales/" class="idx-Subtitle .external-link" >4. Virtual Chords & Scales</a>
+			 <a href="https://beacons.ai/theworldisbeautiful" class="idx-Subtitle external-link" >// This is an affiliate</a><br>
+                  <a href="https://github.com/mysticmatewan" class="idx-Subtitle external-link" >0. Github</a>
+		  <a href="https://banpraong.netlify.app" class="idx-Subtitle external-link" >1. Banpraong</a> 
+			 <a href="https://banpraong-blog.blogspot.com/" class="idx-Subtitle external-link" >2. Banpraong-Blog</a>
+			 <a href="https://rygwan.blogspot.com/" class="idx-Subtitle external-link">3. Madwem</a>
+                         <a href="https://mysticmatewan.github.io/Virtual-Chords-Scales/" class="idx-Subtitle external-link" >4. Virtual Chords & Scales</a>
 		  
             <ul class="sw-List small">
              <p class="idx-Subtitle"></p> </ul> <br>
 			 <p class="idx-Subtitle">/* My writings <br>and<br> theorems */</p><br>
-			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle">1. Syazwan's Journal</a>    
+			 <a href="works/syazwans-journal-1.html" class="idx-Subtitle external-link">1. Syazwan's Journal</a>    
 	  </div>
         </div>
       </div>
@@ -302,60 +302,63 @@ button:hover {
 </div>
   <script>
     // Array of objects containing image sources and links
-const ads = [
-    { src: 'https://via.placeholder.com/300x200?text=Ad+1', link: 'https://external-website.com/page1' },
-    { src: 'https://via.placeholder.com/300x200?text=Ad+2', link: 'https://external-website.com/page2' },
-    { src: 'https://via.placeholder.com/300x200?text=Ad+3', link: 'https://external-website.com/page3' },
-    { src: 'https://via.placeholder.com/300x200?text=Ad+4', link: 'https://external-website.com/page4' },
-    { src: 'https://via.placeholder.com/300x200?text=Ad+5', link: 'https://external-website.com/page5' },
-    { src: 'https://via.placeholder.com/300x200?text=Ad+30', link: 'https://external-website.com/page30' },
-];
+// Array of objects containing image sources and links
+        const ads = [
+            { src: 'https://via.placeholder.com/300x200?text=Ad+1', link: 'https://external-website.com/page1' },
+            { src: 'https://via.placeholder.com/300x200?text=Ad+2', link: 'https://external-website.com/page2' },
+            { src: 'https://via.placeholder.com/300x200?text=Ad+3', link: 'https://external-website.com/page3' },
+            { src: 'https://via.placeholder.com/300x200?text=Ad+4', link: 'https://external-website.com/page4' },
+            { src: 'https://via.placeholder.com/300x200?text=Ad+5', link: 'https://external-website.com/page5' },
+            { src: 'https://via.placeholder.com/300x200?text=Ad+30', link: 'https://external-website.com/page30' },
+        ];
 
-// Variable to track if the popup has been shown
-let isPopupShown = false;
+        let isPopupShown = false;
 
-// Function to show the exit popup
-function showExitPopup() {
-    const randomAd = ads[Math.floor(Math.random() * ads.length)];
-    document.getElementById('adImage').src = randomAd.src;
-    const adLink = document.getElementById('adLink');
-    adLink.href = randomAd.link;
+        // Function to show the exit popup
+        function showExitPopup() {
+            const randomAd = ads[Math.floor(Math.random() * ads.length)];
+            document.getElementById('adImage').src = randomAd.src;
+            const adLink = document.getElementById('adLink');
+            adLink.href = randomAd.link; // Set the ad link dynamically
 
-    // Set up a click event on the ad link
-    adLink.addEventListener('click', function(event) {
-        // Allow the user to navigate to the link
-        window.location.href = randomAd.link;  // This will take the user to the external link
-    });
+            // Display the overlay and popup
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('exitPopup').style.display = 'block';
+        }
 
-    // Display the popup
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('exitPopup').style.display = 'block';
-}
+        // Show popup on mouse leave
+        document.addEventListener('mouseleave', function(event) {
+            if (event.clientY < 0 && !isPopupShown) {
+                showExitPopup();
+                isPopupShown = true;
+            }
+        });
 
-// Show popup on mouse leave
-document.addEventListener('mouseleave', function(event) {
-    if (event.clientY < 0 && !isPopupShown) {
-        showExitPopup();
-        isPopupShown = true;
-    }
-});
+        // Show popup on link click
+        document.querySelectorAll('.external-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link action
+                showExitPopup(); // Show the popup instead
+            });
+        });
 
-// Show popup on link click
-document.querySelectorAll('.external-link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default link action
-        showExitPopup(); // Show the popup instead
-    });
-});
+        // Close popup actions
+        document.getElementById('noBtn').addEventListener('click', closePopup);
+        document.getElementById('closeBtn').addEventListener('click', closePopup);
 
-// Close popup actions
-document.getElementById('noBtn').addEventListener('click', closePopup);
-document.getElementById('closeBtn').addEventListener('click', closePopup);
+        // Close the popup
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('exitPopup').style.display = 'none';
+        }
 
-function closePopup() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('exitPopup').style.display = 'none';
-}
+        // Allow the user to click the "Visit Offer" button after the popup is shown
+        document.getElementById('adLink').addEventListener('click', function(event) {
+            const adUrl = event.target.href; // Get the URL of the ad
+            setTimeout(function() {
+                window.location.href = adUrl; // Redirect the user to the ad URL
+            }, 100); // Small delay to make the redirection work after closing the popup
+        });
 
 </script>
 </body>
