@@ -298,89 +298,92 @@ button:hover {
 </div>
 
 <script>
-    // Array of objects containing links for the ads
-    const ads = [
-        { link: 'https://atmy.me/006u7z001tbh' },
-        { link: 'https://atmy.me/go/Lec8DuNZ' },
-        { link: 'https://atmy.me/go/cHPEL4ao' },
-        { link: 'https://atmy.me/go/xRolrL6Q' },
-        { link: 'https://atmy.me/go/RScwDvGe' },
-        { link: 'https://atmy.me/go/vipOtzSs' },
-        { link: 'https://atmy.me/go/Nhw0qwlm' },
-        { link: 'https://atmy.me/go/iWOKTW59' },
-        { link: 'https://atmy.me/go/F5ujwpgt' },
-        { link: 'https://atmy.me/go/vc2D5Cqb' },
-        { link: 'https://atmy.me/go/VdJfbR20' },
-        { link: 'https://atmy.me/go/0Utl3OAF' },
-        { link: 'https://atmy.me/go/DVRQJ4vr' },
-        { link: 'https://atmy.me/go/6pwAJOmH' },
-        { link: 'https://rafuandodorai.blogspot.com/?m=1' },
-    ];
+// Array of objects containing links for the ads
+const ads = [
+    { link: 'https://atmy.me/006u7z001tbh' },
+    { link: 'https://atmy.me/go/Lec8DuNZ' },
+    { link: 'https://atmy.me/go/cHPEL4ao' },
+    { link: 'https://atmy.me/go/xRolrL6Q' },
+    { link: 'https://atmy.me/go/RScwDvGe' },
+    { link: 'https://atmy.me/go/vipOtzSs' },
+    { link: 'https://atmy.me/go/Nhw0qwlm' },
+    { link: 'https://atmy.me/go/iWOKTW59' },
+    { link: 'https://atmy.me/go/F5ujwpgt' },
+    { link: 'https://atmy.me/go/vc2D5Cqb' },
+    { link: 'https://atmy.me/go/VdJfbR20' },
+    { link: 'https://atmy.me/go/0Utl3OAF' },
+    { link: 'https://atmy.me/go/DVRQJ4vr' },
+    { link: 'https://atmy.me/go/6pwAJOmH' },
+    { link: 'https://rafuandodorai.blogspot.com/?m=1' },
+];
 
-    let isPopupShown = false;
-    let pendingLink = null; // Store the pending link until user interacts with popup
+let isPopupShown = false;
+let pendingLink = null; // Store the pending link until user interacts with popup
 
-    // Function to show the exit popup
-    function showExitPopup() {
-        const randomAd = ads[Math.floor(Math.random() * ads.length)];
+// Function to show the exit popup
+function showExitPopup() {
+    const randomAd = ads[Math.floor(Math.random() * ads.length)];
 
-        // Log the random ad link to check if it's correct
-        console.log(randomAd.link);
+    // Log the random ad link to check if it's correct
+    console.log(randomAd.link);
 
-        // Set the ad link dynamically
-        const adLink = document.getElementById('adLink');
-        adLink.href = randomAd.link;
+    // Set the ad link dynamically
+    const adLink = document.getElementById('adLink');
+    adLink.href = randomAd.link;
 
-        // Store the pending link that the user was trying to visit
-        const linkToOpen = pendingLink || randomAd.link;
+    // Store the pending link that the user was trying to visit
+    const linkToOpen = pendingLink || randomAd.link;
 
-        // Display the overlay and popup
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('exitPopup').style.display = 'block';
+    // Display the overlay and popup
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('exitPopup').style.display = 'block';
 
-        // Ask the user to click to open the tabs
-        const openButton = document.getElementById('openTabsBtn');
-        openButton.style.display = 'inline-block';  // Make the button visible
+    // Ask the user to click to open the tabs
+    const openButton = document.getElementById('openTabsBtn');
+    openButton.style.display = 'inline-block';  // Make the button visible
 
-        // Handle the user clicking the "Open Tabs" button
-        openButton.onclick = function() {
-            // Open both the ad link and the external link in separate tabs
-            window.open(linkToOpen, '_blank'); // The link the user was trying to go to
-            window.open(randomAd.link, '_blank'); // The random ad link
-
-            closePopup(); // Close the popup after opening the tabs
-        };
-    }
-
-    // Show popup on mouse leave
-    document.addEventListener('mouseleave', function(event) {
-        if (event.clientY < 0 && !isPopupShown) {
-            showExitPopup();
-            isPopupShown = true;
+    // Handle the user clicking the "Open Tabs" button
+    openButton.onclick = function() {
+        // Open both the ad link and the external link in separate tabs
+        if (pendingLink) {
+            window.open(pendingLink, '_blank'); // The external link the user was trying to go to
         }
-    });
+        window.open(randomAd.link, '_blank'); // The random ad link
 
-    // Show popup on external link click
-    document.querySelectorAll('.external-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default link action (temporarily)
-            showExitPopup(); // Show the popup instead
+        closePopup(); // Close the popup after opening the tabs
+    };
+}
 
-            // Save the link to be opened later
-            pendingLink = link.href;
-        });
-    });
-
-    // Close popup actions
-    document.getElementById('closeBtn').addEventListener('click', closePopup);
-
-    // Close the popup
-    function closePopup() {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('exitPopup').style.display = 'none';
-        document.getElementById('openTabsBtn').style.display = 'none';  // Hide the button after use
+// Show popup on mouse leave
+document.addEventListener('mouseleave', function(event) {
+    if (event.clientY < 0 && !isPopupShown) {
+        showExitPopup();
+        isPopupShown = true;
     }
+});
+
+// Show popup on external link click
+document.querySelectorAll('.external-link').forEach(link => {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link action (temporarily)
+        showExitPopup(); // Show the popup instead
+
+        // Save the link to be opened later
+        pendingLink = link.href;
+    });
+});
+
+// Close popup actions
+document.getElementById('closeBtn').addEventListener('click', closePopup);
+
+// Close the popup
+function closePopup() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('exitPopup').style.display = 'none';
+    document.getElementById('openTabsBtn').style.display = 'none';  // Hide the button after use
+}
 </script>
+
 
 </body>
 </html>
