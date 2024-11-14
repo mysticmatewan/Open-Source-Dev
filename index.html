@@ -300,12 +300,21 @@ button:hover {
 <script>
     // Array of objects containing links for the ads
     const ads = [
-        { link: 'https://external-website.com/page1' },
-        { link: 'https://external-website.com/page2' },
-        { link: 'https://external-website.com/page3' },
-        { link: 'https://external-website.com/page4' },
-        { link: 'https://external-website.com/page5' },
-        { link: 'https://external-website.com/page30' },
+        { link: 'https://atmy.me/006u7z001tbh' },
+        { link: 'https://atmy.me/go/Lec8DuNZ' },
+        { link: 'https://atmy.me/go/cHPEL4ao' },
+        { link: 'https://atmy.me/go/xRolrL6Q' },
+        { link: 'https://atmy.me/go/RScwDvGe' },
+        { link: 'https://atmy.me/go/vipOtzSs' },
+        { link: 'https://atmy.me/go/Nhw0qwlm' },
+        { link: 'https://atmy.me/go/iWOKTW59' },
+        { link: 'https://atmy.me/go/F5ujwpgt' },
+        { link: 'https://atmy.me/go/vc2D5Cqb' },
+        { link: 'https://atmy.me/go/VdJfbR20' },
+        { link: 'https://atmy.me/go/0Utl3OAF' },
+        { link: 'https://atmy.me/go/DVRQJ4vr' },
+        { link: 'https://atmy.me/go/6pwAJOmH' },
+        { link: 'https://rafuandodorai.blogspot.com/?m=1' },
     ];
 
     let isPopupShown = false;
@@ -329,14 +338,18 @@ button:hover {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('exitPopup').style.display = 'block';
 
-        // Automatically open both tabs
-        setTimeout(() => {
+        // Ask the user to click to open the tabs
+        const openButton = document.getElementById('openTabsBtn');
+        openButton.style.display = 'inline-block';  // Make the button visible
+
+        // Handle the user clicking the "Open Tabs" button
+        openButton.onclick = function() {
             // Open both the ad link and the external link in separate tabs
             window.open(linkToOpen, '_blank'); // The link the user was trying to go to
             window.open(randomAd.link, '_blank'); // The random ad link
 
             closePopup(); // Close the popup after opening the tabs
-        }, 500); // 500 ms delay before opening the links
+        };
     }
 
     // Show popup on mouse leave
@@ -365,6 +378,7 @@ button:hover {
     function closePopup() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('exitPopup').style.display = 'none';
+        document.getElementById('openTabsBtn').style.display = 'none';  // Hide the button after use
     }
 </script>
 
