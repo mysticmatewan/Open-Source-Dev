@@ -186,6 +186,36 @@
             background: var(--black);
             color: var(--bg);
         }
+
+	/* Playlist item styling */
+#song-list li {
+    padding: 10px;
+    margin: 5px 0;
+    list-style: none;
+    background-color: #1a1a2e;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#song-list li:hover {
+    background-color: #6a0dad;
+    color: #fff;
+}
+
+/* Keep hover effect for the current song */
+#song-list li.current-song {
+    background-color: #6a0dad;
+    color: #fff;
+}
+
+/* Optional: disable hover for the current song */
+#song-list li.current-song:hover {
+    background-color: #6a0dad; /* Same as the active state */
+    color: #fff;
+}
+
     </style>
 </head>
 <body>
@@ -376,6 +406,25 @@ function formatTime(time) {
 function seek(event) {
     const progressPercent = event.target.value;
     audio.currentTime = (progressPercent / 100) * audio.duration;
+}
+
+function loadSong(index) {
+    const song = songs[index];
+    audio.src = song.src;
+    songTitle.textContent = song.title;
+    songArtist.textContent = song.artist;
+    songCover.src = song.cover;
+
+    // Update the current song highlight
+    document.querySelectorAll("#song-list li").forEach((li, idx) => {
+        if (idx === index) {
+            li.classList.add("current-song");
+        } else {
+            li.classList.remove("current-song");
+        }
+    });
+
+    audio.load();
 }
 
 // Event listeners
