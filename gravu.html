@@ -135,12 +135,33 @@ a {
     cursor: pointer;
 }
 
+#progress:focus {
+    outline: none;
+}
+
+#progress::-webkit-slider-thumb:hover {
+    background: var(--highlight);
+}
+
+#progress::-moz-range-thumb {
+    background: var(--black);
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+}
+
+#progress::-moz-range-thumb:hover {
+    background: var(--highlight);
+}
+
 .progress-bar span {
     display: block;
     text-align: center;
     font-size: 0.85rem;
     color: var(--prog);
 }
+
 
 /* Volume Control */
 .volume-control {
