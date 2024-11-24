@@ -10,182 +10,196 @@
 />
     <style>
         /* Global Reset and Variables */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        :root {
-            font-size: 14px;
-            font-family: 'Roboto', sans-serif;
+:root {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 
-            --bg: #121212;
-            --black: #1DB954;
-            --prog: #B3B3B3;
-        }
+    --bg: #191414; /* Spotify dark background */
+    --black: #1DB954; /* Spotify green for highlights */
+    --prog: #b3b3b3; /* Light grey for text */
+    --dark-grey: #121212; /* Darker grey for more contrast */
+    --grey: #333; /* For borders and secondary background */
+}
 
-        /* Body Styling */
-        body {
-            background: var(--bg);
-            color: var(--prog);
-            font-family: 'Roboto', sans-serif;
-        }
+/* Body Styling */
+body {
+    background: var(--bg);
+    color: var(--prog);
+    font-family: 'Roboto', sans-serif;
+}
 
-        a {
-            text-decoration: none;
-        }
+a {
+    text-decoration: none;
+}
 
-        /* Player Container */
-        #music-player {
-            width: 90%;
-            max-width: 400px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: var(--bg);
-            box-shadow: 20px 20px 60px #0d0d0d, 
-                        -20px -20px 60px #1f1f1f;
-            border-radius: 15px;
-            color: white;
-            border: 1px solid #333;
-        }
+/* Player Container */
+#music-player {
+    width: 90%;
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--dark-grey);
+    box-shadow: 20px 20px 60px #0d0d0d, 
+                -20px -20px 60px #1f1f1f;
+    border-radius: 15px;
+    color: white;
+    border: 1px solid var(--grey);
+}
 
-        #music-player header h1 {
-            text-align: center;
-            color: var(--black);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
+#music-player header h1 {
+    text-align: center;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
 
-        .player-container {
-            text-align: center;
-        }
+.player-container {
+    text-align: center;
+}
 
-        .current-song img {
-            display: block;
-            width: 100px;
-            height: 100px;
-            margin: 1rem auto;
-            border-radius: 50%;
-            border: 2px solid var(--black);
-            box-shadow:  4px 4px 10px #000, 
-                        -4px -4px 10px #1a1a1a;
-        }
+.current-song img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 1rem auto;
+    border-radius: 50%;
+    border: 2px solid var(--black);
+    box-shadow: 4px 4px 10px #000, 
+                -4px -4px 10px #1a1a1a;
+}
 
-        .current-song h2, 
-        .current-song h3 {
-            color: white;
-            margin: 0.5rem 0;
-        }
+.current-song h2, 
+.current-song h3 {
+    color: white;
+    margin: 0.5rem 0;
+}
 
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 1rem 0;
-        }
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1rem 0;
+}
 
-        .controls button {
-            background: var(--bg);
-            color: var(--black);
-            border: 2px solid var(--prog);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow:  4px 4px 8px #0d0d0d, 
-                        -4px -4px 8px #1f1f1f;
-            transition: all 0.2s ease-in-out;
-        }
+.controls button {
+    background: var(--bg);
+    color: var(--black);
+    border: 2px solid var(--prog);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px #0d0d0d, 
+                -4px -4px 8px #1f1f1f;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
 
-        .controls button:hover {
-            background: var(--black);
-            color: var(--bg);
-        }
+.controls button:hover, 
+.controls button:focus {
+    background: var(--black);
+    color: var(--bg);
+    transform: scale(1.1); /* Adds a slight scale effect */
+}
 
-        /* Progress Bar */
-        .progress-bar {
-            margin: 1rem 0;
-        }
+/* Progress Bar */
+.progress-bar {
+    margin: 1rem 0;
+}
 
-        #progress {
-            width: 100%;
-            height: 8px;
-            border-radius: 10px;
-            background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
-            box-shadow:  2px 2px 5px #0a0a0a, 
-                        -2px -2px 5px #1c1c1c;
-        }
+#progress {
+    width: 100%;
+    height: 8px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+    box-shadow: 2px 2px 5px #0a0a0a, 
+                -2px -2px 5px #1c1c1c;
+}
 
-        #progress::-webkit-slider-thumb {
-            appearance: none;
-            width: 12px;
-            height: 12px;
-            background: var(--black);
-            border-radius: 50%;
-            cursor: pointer;
-        }
+#progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--black);
+    border-radius: 50%;
+    cursor: pointer;
+}
 
-        .progress-bar span {
-            display: block;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--prog);
-        }
+.progress-bar span {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--prog);
+}
 
-        /* Volume Control */
-        .volume-control {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1rem;
-        }
+/* Volume Control */
+.volume-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
 
-        .volume-control label {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
+.volume-control label {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
 
-        #volume {
-            width: 80%;
-        }
+#volume {
+    width: 80%;
+}
 
-        /* Playlist */
-        .playlist {
-            margin-top: 1.5rem;
-        }
+/* Playlist */
+.playlist {
+    margin-top: 1.5rem;
+}
 
-        .playlist h2 {
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--black);
-        }
+.playlist h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--black);
+}
 
-        .playlist ul {
-            list-style: none;
-            padding: 0;
-        }
+.playlist ul {
+    list-style: none;
+    padding: 0;
+}
 
-        .playlist ul li {
-            padding: 10px;
-            margin: 5px 0;
-            background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
-            border-radius: 5px;
-            color: var(--prog);
-            text-align: center;
-            cursor: pointer;
-            transition: background 0.2s ease-in-out;
-        }
+.playlist ul li {
+    padding: 10px;
+    margin: 5px 0;
+    background: linear-gradient(145deg, #0d0d0d, #1a1a1a);
+    border-radius: 5px;
+    color: var(--prog);
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
 
-        .playlist ul li:hover {
-            background: var(--black);
-            color: var(--bg);
-        }
+.playlist ul li:hover, 
+.playlist ul li:focus {
+    background: var(--black);
+    color: var(--bg);
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Ensures the hover effect does not stick on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .controls button,
+    .playlist ul li {
+        transition: none;
+    }
+}
     </style>
 </head>
 <body>
