@@ -186,44 +186,6 @@
             background: var(--black);
             color: var(--bg);
         }
-
-	/* Playlist item styling */
-#song-list li {
-    padding: 10px;
-    margin: 5px 0;
-    list-style: none;
-    background-color: #1a1a2e;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Hover effect for song list */
-#song-list li:hover {
-    background-color: #6a0dad;
-    color: #fff;
-}
-
-/* Keep hover effect for the current song only when it's not being hovered */
-#song-list li.current-song {
-    background-color: #6a0dad; /* Active song background */
-    color: #fff;
-}
-
-/* Remove hover effect for the current song */
-#song-list li.current-song:hover {
-    background-color: #6a0dad; /* Same as the active state */
-    color: #fff;
-}
-
-/* Prevent hover styling in touch devices */
-@media (hover: none) {
-    #song-list li:hover {
-        background-color: #1a1a2e; /* Remove hover effect on touch devices */
-        color: #fff;
-    }
-}
     </style>
 </head>
 <body>
@@ -414,28 +376,6 @@ function formatTime(time) {
 function seek(event) {
     const progressPercent = event.target.value;
     audio.currentTime = (progressPercent / 100) * audio.duration;
-}
-
-function loadSong(index) {
-    const song = songs[index];
-    audio.src = song.src;
-    songTitle.textContent = song.title;
-    songArtist.textContent = song.artist;
-    songCover.src = song.cover;
-    audio.load();
-    progressSlider.value = 0; // Reset progress
-    document.getElementById("current-time").textContent = "0:00";
-    document.getElementById("duration").textContent = "0:00";
-    
-    // Remove 'current-song' class from previous song
-    const previousSong = document.querySelector('.current-song');
-    if (previousSong) {
-        previousSong.classList.remove('current-song');
-    }
-    
-    // Add 'current-song' class to the newly loaded song
-    const currentSong = songList.children[index];
-    currentSong.classList.add('current-song');
 }
 
 // Event listeners
