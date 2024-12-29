@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* General column styling */
+.column {
+    flex: 1;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for .column-0 */
+.column-0 {
+    width: 20%; /* Occupies 30% of the page width */
+    margin: 0 auto; /* Centres the column horizontally */
+    padding: 0px; /* Adds some inner spacing */
+    background-color: #f9f9f9; /* Light background for better visibility */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Centres text content */
+    min-height: auto; /* Resets any fixed height for adaptability */
+}
+
+/* Flex container for responsiveness */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adds spacing between columns */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .column-0 {
+        width: 50%; /* Expands to 90% of the screen width */
+        margin: 10px auto; /* Centres and adds vertical spacing */
+        padding: 0px; /* Reduces padding for a compact look */
+        text-align: left; /* Aligns text to the left for better readability */
+    }
+    .flex-container {
+        flex-direction: column; /* Stacks items vertically on small screens */
+    }
+    .column-0 {
+        order: -1; /* Moves the .column-0 to the top */
+    }
+}
+
+
+.column h3 {
+    margin-bottom: 10px;
+}
+
+.column p {
+    margin: 0;
+}
+
+.member {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.member-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.member-info li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.member-info li i {
+    color: #345391; /* Icon colour */
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.member-info li a {
+    text-decoration: none;
+    color: #555; /* Link colour */
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.member-info li a:hover {
+    color: #345391; /* Hover colour for links */
+    text-decoration: underline;
+}
+
+.member-info li img {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Tooltip Styling */
+[data-toggle="tooltip"] {
+    position: relative;
+    cursor: pointer;
+}
+
+[data-toggle="tooltip"]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0.9;
+}
+
+.img-fluid {
+    width: 100%; /* Ensures the image spans the full width of its container */
+    height: auto; /* Maintains the aspect ratio */
+    display: block; /* Removes any extra spacing below the image */
+    border-radius: 8px; /* Adds rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    margin: 0 auto; /* Centres the image if the column is narrower */
+}
+
+/* Responsive adjustments (optional, to ensure proper display on smaller screens) */
+@media (max-width: 768px) {
+    .img-fluid {
+        width: 100%; /* Ensures the image fits smaller screen widths */
+        margin: 5px 0; /* Adjusts spacing */
+    }
+}
+
+ol.gradient-list {
+  counter-reset: gradient-counter;
+  list-style: none;
+  margin: 1.75rem 0;
+  padding-left: 1rem;
+  > li {
+    background: white;
+    border-radius: 0 0.5rem 0.5rem 0.5rem;
+    @extend %boxshadow;
+    counter-increment: gradient-counter;
+    margin-top: 1rem;
+    min-height: 3rem;
+    padding: 1rem 1rem 1rem 3rem;
+    position: relative;
+    &::before,
+    &::after {
+      background: linear-gradient(135deg, $blue 0%,$green 100%);
+      border-radius: 1rem 1rem 0 1rem;
+      content: '';
+      height: 3rem;
+      left: -1rem;
+      overflow: hidden;
+      position: absolute;
+      top: -1rem;
+      width: 3rem;
+    }
+    &::before {
+      align-items: flex-end;
+      @extend %boxshadow;
+      content: counter(gradient-counter);
+      color: $black;
+      display: flex;
+      font: 900 1.5em/1 'Montserrat';
+      justify-content: flex-end;
+      padding: 0.125em 0.25em;
+      z-index: 1;
+    }
+    @for $i from 1 through 5 {
+      &:nth-child(10n+#{$i}):before {
+        background: linear-gradient(135deg, rgba($green, $i * 0.2) 0%,rgba($yellow, $i * 0.2) 100%);
+      }
+    }
+    @for $i from 6 through 10 {
+      &:nth-child(10n+#{$i}):before {
+        background: linear-gradient(135deg, rgba($green, 1 - (($i - 5) * 0.2)) 0%,rgba($yellow, 1 - (($i - 5) * 0.2)) 100%);
+      }
+    }
+    + li {
+      margin-top: 2rem;
+    }
+  }
+}
+
+/*** EXTEND ***/
+/* box-shadow */
+%boxshadow {
+  box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(75,0,0,0.05);
+}
+
+/*** STYLE ***/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/*** VARIABLES ***/
+/* Colors */
+$black: #1d1f20;
+$blue: #83e4e2;
+$green: #a2ed56;
+$yellow: #fddc32;
+$white: #fafafa;
+
+/* Header with Border */
+.header-bordered {
+    background-color: #397cd4; /* Blue background */
+    color: #FFFFFF; /* Blue text */
+    border: 2px solid #e6e64c; /* Yellow border */
+    padding: 15px; /* Space inside the header */
+    margin: 20px auto; /* Centres the header and adds spacing around it */
+    max-width: 90%; /* Limits the width to 90% of the page */
+    text-align: center; /* Centres the text */
+    background-color: #ffffff; /* White background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-sizing: border-box; /* Includes padding and borders in width */
+}
+
+.terms-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            margin-top: 30px;
+            font-size: 1rem;
+            background-color: transparent; /* Transparent background */
+            color: #FFFFFF; /* Blue text color */
+            border: 2px solid #FFFFFF; /* Blue border */
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .terms-btn:hover i {
+            opacity: 1; /* Full opacity for the arrow icon on hover */
+        }
+
+.tabs {
+  display: flex;
+  flex-direction: row; /* Align tabs horizontally by default */
+  max-width: 95%;
+  background: #ffd700; /* UUM Yellow */
+  border: 2px solid #002d62; /* Solid UUM Blue border */
+  border-radius: 8px; /* Slightly rounded corners for a modern look */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin: auto;
+  height: auto; /* Adjusts height based on content */
+  overflow: hidden; /* Ensures clean layout with no overflow */
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+}
+
+.label {
+  width: 100%; /* Make the labels full width */
+  padding: 20px 30px;
+  background: #ffd700; /* UUM Yellow */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  color: #002d62; /* UUM Blue */
+  text-align: left; /* Align text to the left */
+  position: relative; /* Position for the arrow */
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.label::after {
+  content: '▼'; /* Down arrow symbol */
+  font-size: 12px;
+  color: #7f7f7f; /* Grey for inactive arrow */
+  position: absolute;
+  right: 20px; /* Position the arrow to the right */
+  top: 50%; /* Vertically centre the arrow */
+  transform: translateY(-50%);
+  transition: transform 0.3s, color 0.3s;
+}
+
+.input:checked + .label {
+  background: #ffffff; /* Active tab is white */
+  color: #002d62; /* UUM Blue text for active tab */
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Slight inner shadow */
+}
+
+.input:checked + .label::after {
+  transform: translateY(-50%) rotate(180deg); /* Rotate the arrow */
+  color: #002d62; /* Blue for active arrow */
+}
+
+.label:hover {
+  background: #002d62; /* UUM Blue on hover */
+  color: #ffffff; /* White text on hover */
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3); /* Glow effect */
+}
+
+.label:active {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* Inner shadow on click */
+}
+
+.panel {
+  display: none; /* Initially hidden */
+  padding: 20px 30px 30px;
+  background: #ffffff; /* White background */
+  color: #002d62; /* Blue text for contrast */
+  flex-grow: 1; /* Ensures the panel takes up remaining space */
+  border-left: 2px solid #002d62; /* Separate panel visually from tabs */
+  font-size: 16px; /* Comfortable font size */
+  line-height: 1.6; /* Readable line height */
+  overflow: auto; /* Allows scrolling if content overflows */
+  border-radius: 0 8px 8px 0; /* Match the container's rounded corners */
+  opacity: 0; /* Initial opacity for fade effect */
+  transform: translateY(-10px); /* Slight upward position for animation effect */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth fade-in and slide */
+}
+
+.input:checked + .label + .panel {
+  display: block; /* Make it visible */
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Reset position */
+}
+
+@media (min-width: 600px) {
+  .tabs {
+    flex-direction: column; /* Switch to vertical layout for larger screens */
+    height: 100%; /* Ensure tabs take full height */
+  }
+
+  .label {
+    width: auto; /* Allow labels to adjust their width */
+    padding: 15px; /* Adjust padding for compactness */
+  }
+
+  .panel {
+    order: 99;
+  }
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column; /* Vertical layout */
+    align-items: stretch;
+  }
+
+  .label {
+    text-align: center; /* Center align for tabs */
+    padding: 15px;
+    border-bottom: 2px solid #002d62; /* Tab separator */
+  }
+
+  .panel {
+    border-left: none; /* Remove side border */
+    border-top: 2px solid #002d62; /* Add top border */
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+  }
+}
+
+@media (max-width: 480px) {
+  .label {
+    font-size: 16px; /* Adjust font size for smaller screens */
+    padding: 10px;
+  }
+
+  .panel {
+    font-size: 14px; /* Compact font for mobile */
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Full Page Container Header -->
+<div style="background-color: #397cd4; /* Blue background */
+    color: #ffffff; /* White text for contrast */
+    padding: 20px; /* Adds space inside the header */
+    text-align: center; /* Centres the text */
+    width: 100vw; /* Takes the full width of the viewport */
+    margin: auto; /* Ensures no extra space around the header */
+    box-sizing: border-box; /* Includes padding and borders in width */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 100px; /* Set a fixed height (you can adjust this as needed) */">
+    <h1>Welcome To eRESOURCES@LINTAS Universiti Utara Malaysia</h1>
+</div>
+
+<div style="background-color: #397cd4; /* Blue background */
+    color: #ffffff; /* White text for contrast */
+    padding: 20px; /* Adds space inside the header */
+    text-align: center; /* Centres the text */
+    width: 100vw; /* Takes the full width of the viewport */
+    margin: auto; /* Ensures no extra space around the header */
+    box-sizing: border-box; /* Includes padding and borders in width */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    height: 100px; /* Set a fixed height (you can adjust this as needed) */">
+    <a href="https://login.eserv.uum.edu.my/public/terms.htm" class="terms-btn">
+            Terms and Conditions
+            <i class="bx bx-right-arrow-alt"></i>
+        </a>
+</div>
+			
+<br>
+
+<div class="tabs">
+  <input class="input" name="tabs" type="radio" id="tab-1" checked="checked"/>
+  <label class="label" for="tab-1">Online Database</label>
+  <div class="panel">
+    <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/onlinedb.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+			<div class="member-info">
+		  	<ol class="gradient-list">
+		  	<li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=http://psycnet.apa.org">APA PsycARTICLES</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://dl.acm.org/" data-toggle="tooltip" data-placement="right" title="ACM Digital Library">ACM Digital Library</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a href="https://login.eserv.uum.edu.my/loggedin/cch.htm" data-toggle="tooltip" data-placement="right" title="CCH Online">CCH Online Library & Croner-i Tax & Accounting</a></li>
+		    <li><i class="bx bx-chevron-right"></i><a href="https://login.eserv.uum.edu.my/loggedin/clj.htm">CLJ Prime</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a href="https://login.eserv.uum.edu.my/loggedin/datastream.htm">Refinitiv Eikon & Datastream</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.emerald.com/insight">EmeraldInsight: eJournal Collection + Case Studies</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.scopus.com">Elsevier - Scopus</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.sciencedirect.com/">Elsevier: ScienceDirect</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/loggedin/hbsp.htm">Harvard Business Publishing for Educators</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.jstor.org/search/">JStor:Arts & Sciences </a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/loggedin/lawnet.htm">LawNet </a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://advance.lexis.com/myresearchhome/?pdmfid=1522468&identityprofileid=HH95Z658322">Lexis Advance Malaysia</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=http://search.proquest.com/index?username=IPAUTO&password=IPAUTO">Proquest Dissertation & Theses Online</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=http://search.proquest.com/index?username=IPAUTO&password=IPAUTO">Proquest One Business</a></li>
+			  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://launch.westlawasia.com/signon?sp=UniUtara_WLA-1">WestLaw</a></li>
+        <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.webofscience.com">Web of Science + Journal Citation Report</a><img src="https://login.eserv.uum.edu.my/public/images/new3.gif"></li>
+			  </ol>
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+  <input class="input" name="tabs" type="radio" id="tab-2"/>
+  <label class="label" for="tab-2">Free Online Database</label>
+  <div class="panel">
+    <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/freeonlinedb.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member"> 
+			<div class="member-info">
+		  	<ol class="gradient-list">
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://igpublishing.com/business-expert-press/">iG Publishing – Business Expert Press</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://citeready.com/guide/">CiteReady (registration guide)</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://directory.doabooks.org/">Directory of Open Access Books</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://eric.ed.gov/">ERIC: Education Resources Information Center</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.henrystewartpublications.com/">Henry Stewart Publications</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://data.imf.org/">IMF: International Monetary Fund Data</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.elibrary.imf.org/">IMF: International Monetary Fund eLibrary</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.tandfonline.com/">Taylor and Francis Online</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://onlinelibrary.wiley.com/">Wiley Online Library</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://journals.sagepub.com/">SAGE Journals</a></li>
+  <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.worldscientific.com/">World Scientific: eJournal & Databases</a></li>
+</ol>
+
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+  <input class="input" name="tabs" type="radio" id="tab-3"/>
+  <label class="label" for="tab-3">eBooks</label>
+  <div class="panel">
+    <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/ebook-logo.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+			<div class="member-info">
+		  	<ol class="gradient-list">
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.ebsco.com/products/ebooks">EBSCO eBooks</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.taylorfrancis.com/">Taylor & Francis E-Books</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://ebookcentral.proquest.com">Proquest eBooks Central</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.wiley.com/en-us">Wiley Textbooks/Academic Textbooks</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.worldscientific.com/page/ebooks">World Scientific: eBook</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.igi-global.com/book/encyclopedia-information-science-technology-third/126808">Encyclopedia of Information Science and Technology, Third Edition</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.cambridge.org/core">Cambridge Core</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.lexread.com">LexRead</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.degruyter.com/document/doi/10.1515/9781501508015/html">DeGruyter - Handbook of Management Communication</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.degruyter.com/document/doi/10.1515/9783110302997/html">DeGruyter - School and Society</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.degruyter.com/document/doi/10.1515/9780190247760/html">DeGruyter - The Quiet Revolution: The Veil's Resurgence From The Middle East to America</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.vitalsource.com">Vital Source</a></li>
+</ol>
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+  <input class="input" name="tabs" type="radio" id="tab-4"/>
+  <label class="label" for="tab-4">eJournal</label>
+  <div class="panel">
+  <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/ejournal-logo.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+			<div class="member-info">
+		  	<ol class="gradient-list">
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://muse.jhu.edu/journals/journal_of_college_student_development/">Journal of College Student Development</a></li>
+</ol>
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+  <input class="input" name="tabs" type="radio" id="tab-5"/>
+  <label class="label" for="tab-5">Library Digital Collections</label>
+  <div class="panel">
+    <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/librarydigitalcollections.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+			<div class="member-info">
+		  	<ol class="gradient-list">
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://pastyearpaper.uum.edu.my">Past-Year Exam Paper</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://etd.uum.edu.my">UUM Electronic Theses & Dissertation</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://repository.uum.edu.my">UUM Repository</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://dataverse.uum.edu.my">UUM DataVerse</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://scholarhub.uum.edu.my">UUM ScholarHub</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://annualreporthub.uum.edu.my">UUM Annual Report Hub</a></li>
+</ol>
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+  <input class="input" name="tabs" type="radio" id="tab-6"/>
+  <label class="label" for="tab-6">Other Databases</label> 
+  <div class="panel">
+    <div class="flex-container">
+    <div class="column-0">
+		<img src="https://login.eserv.uum.edu.my/public/images/otherdb.png" class="img-fluid" alt="Online Database">
+    </div>
+    <div class="column">
+        <div class="col-lg-9 col-md-9  align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+			<div class="member-info">
+		  	<ol class="gradient-list">
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.rtvmalaysia.gov.my">Road Traffic Volume Malaysia</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.pnm.gov.my">Perpustakaan Negara Malaysia</a></li>
+    <li><i class="bx bx-chevron-right"></i><a target="_blank" href="https://login.eserv.uum.edu.my/login?url=https://www.sir.yayasanbankrakyat.com.my">Serambi Ilmu Rakyat - Yayasan Bank Rakyat</a></li>
+	<p><span>Username: 02@uum.edu.my to 50@uum.edu.my</span><br><span>Password: sirYBR2024</span></P>
+</ol>
+            </div> 
+            </div>
+          </div>
+    </div>
+</div>
+  </div>
+</div>
+
+<br>
+
+</body>
+
+</html>
