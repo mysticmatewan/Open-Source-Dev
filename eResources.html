@@ -257,15 +257,15 @@ $white: #fafafa;
 
 .tabs {
   display: flex;
-  flex-direction: row; /* Align tabs horizontally by default */
+  flex-direction: row; /* Default horizontal layout */
   max-width: 95%;
   background: #ffd700; /* UUM Yellow */
   border: 2px solid #002d62; /* Solid UUM Blue border */
-  border-radius: 8px; /* Slightly rounded corners for a modern look */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   margin: auto;
-  height: auto; /* Adjusts height based on content */
-  overflow: hidden; /* Ensures clean layout with no overflow */
+  height: auto; /* Adjust height */
+  overflow: hidden; /* Clean layout */
 }
 
 .input {
@@ -274,70 +274,70 @@ $white: #fafafa;
 }
 
 .label {
-  width: 100%; /* Make the labels full width */
+  width: 100%;
   padding: 20px 30px;
   background: #ffd700; /* UUM Yellow */
   cursor: pointer;
   font-weight: bold;
   font-size: 18px;
   color: #002d62; /* UUM Blue */
-  text-align: left; /* Align text to the left */
-  position: relative; /* Position for the arrow */
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s; /* Smooth transition */
+  text-align: left;
+  position: relative;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 .label::after {
-  content: '▼'; /* Down arrow symbol */
+  content: '▼';
   font-size: 12px;
-  color: #7f7f7f; /* Grey for inactive arrow */
+  color: #7f7f7f;
   position: absolute;
-  right: 20px; /* Position the arrow to the right */
-  top: 50%; /* Vertically centre the arrow */
+  right: 20px;
+  top: 50%;
   transform: translateY(-50%);
   transition: transform 0.3s, color 0.3s;
 }
 
 .input:checked + .label {
-  background: #ffffff; /* Active tab is white */
-  color: #002d62; /* UUM Blue text for active tab */
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); /* Slight inner shadow */
+  background: #ffffff; /* Active tab white */
+  color: #002d62;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .input:checked + .label::after {
-  transform: translateY(-50%) rotate(180deg); /* Rotate the arrow */
-  color: #002d62; /* Blue for active arrow */
+  transform: translateY(-50%) rotate(180deg); /* Rotate arrow */
+  color: #002d62;
 }
 
 .label:hover {
-  background: #002d62; /* UUM Blue on hover */
-  color: #ffffff; /* White text on hover */
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3); /* Glow effect */
+  background: #002d62;
+  color: #ffffff;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .label:active {
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* Inner shadow on click */
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .panel {
-  display: none; /* Initially hidden */
+  display: none;
   padding: 20px 30px 30px;
-  background: #ffffff; /* White background */
-  color: #002d62; /* Blue text for contrast */
-  flex-grow: 1; /* Ensures the panel takes up remaining space */
-  border-left: 2px solid #002d62; /* Separate panel visually from tabs */
-  font-size: 16px; /* Comfortable font size */
-  line-height: 1.6; /* Readable line height */
-  overflow: auto; /* Allows scrolling if content overflows */
-  border-radius: 0 8px 8px 0; /* Match the container's rounded corners */
-  opacity: 0; /* Initial opacity for fade effect */
-  transform: translateY(-10px); /* Slight upward position for animation effect */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth fade-in and slide */
+  background: #ffffff;
+  color: #002d62;
+  flex-grow: 1;
+  border-left: 2px solid #002d62;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow: auto;
+  border-radius: 0 8px 8px 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .input:checked + .label + .panel {
-  display: block; /* Make it visible */
-  opacity: 1; /* Fully visible */
-  transform: translateY(0); /* Reset position */
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (min-width: 600px) {
@@ -359,20 +359,37 @@ $white: #fafafa;
 /* Responsive styling */
 @media (max-width: 768px) {
   .tabs {
-    flex-direction: column; /* Vertical layout */
+    flex-direction: column; /* Vertical layout for tablets */
+  }
+
+  .label {
+    text-align: center; /* Centre align text */
+    padding: 15px;
+    border-bottom: 2px solid #002d62; /* Separator for tabs */
+    font-size: 20px; /* Adjust font size */
+  }
+
+  .panel {
+    font-size: 18px; /* Increased font size for readability */
+    border-top: none; /* Remove border to match mobile layout */
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    flex-direction: column; /* Vertical layout for mobile */
     align-items: stretch;
   }
 
   .label {
-    text-align: center; /* Center align for tabs */
-    padding: 15px;
-    border-bottom: 2px solid #002d62; /* Tab separator */
+    font-size: 22px; /* Larger font size */
+    padding: 20px; /* Increase padding for touch devices */
   }
 
   .panel {
-    border-left: none; /* Remove side border */
-    border-top: 2px solid #002d62; /* Add top border */
-    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    font-size: 18px;
+    line-height: 1.8;
   }
 }
 
