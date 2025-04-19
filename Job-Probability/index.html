@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Probability Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Josefin Slab', serif;
+      background: #333333;
+      margin: 0;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #c8006b;
+    }
+
+    p {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    input[type="number"],
+    input[type="range"],
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: 'Josefin Slab', serif;
+      background-color: #444;
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    button {
+      background-color: #c8006b;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-family: 'Josefin Slab', serif;
+    }
+
+    button:hover {
+      background-color: #a00054;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #c8006b;
+    }
+
+    canvas {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+
+    .advice {
+      font-style: italic;
+      color: #ddd;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+    }
+	
+	.formula-box {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
+  color: #ccc;
+  font-size: 14px;
+  text-align: left;
+  font-family: 'Josefin Slab', serif;
+  white-space: pre-line;
+  border: 1px solid #555;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Probability Calculator</h1>
+    <p>Estimate your chances of getting the job.</p>
+
+    <label for="positions">Number of Job Positions:</label>
+    <input type="number" id="positions" min="1" value="1"/>
+
+    <label for="good">Strong Candidates:</label>
+    <input type="number" id="good" min="0" value="10"/>
+
+    <label for="bad">Weak Candidates:</label>
+    <input type="number" id="bad" min="0" value="50"/>
+
+    <label for="strength">Your Strength (0 to 1):</label>
+    <input type="range" id="strength" min="0" max="1" step="0.01" value="0.8"/>
+    <p id="strengthValue">0.8</p>
+
+    <label for="cable">Cable Option (Your Network):</label>
+    <select id="cable">
+	<option value="100">Kompeni Pak Hang</option>
+      <option value="9999">Executive</option>
+      <option value="9000">Manager/Officer</option>
+      <option value="4000">Family Member</option>
+      <option value="2500">Friends</option>
+	  <option value="1000">I'm So Lonely</option>
+    </select>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <div class="advice" id="advice"></div>
+  </div>
+  
+  <div class="formula-box" id="formulaBox"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const strengthSlider = document.getElementById('strength');
+    const strengthValue = document.getElementById('strengthValue');
+    const result = document.getElementById('result');
+    const advice = document.getElementById('advice');
+    const cableSelect = document.getElementById('cable');
+
+    let chart;
+
+    strengthSlider.addEventListener('input', () => {
+      strengthValue.textContent = strengthSlider.value;
+    });
+
+    function calculate() {
+  const P = parseFloat(document.getElementById('positions').value);
+  const G = parseFloat(document.getElementById('good').value);
+  const W = parseFloat(document.getElementById('bad').value);
+  const S = parseFloat(document.getElementById('strength').value);
+  const cableFactor = parseFloat(cableSelect.value);
+
+  const totalWeight = G * 1 + W * 0.3;
+  const baseChance = P / totalWeight;
+
+  let finalChance;
+
+  // If it's Bapak Hang’s Company (value is 100), force 100%
+  if (cableFactor === 100) {
+    finalChance = 100;
+  } else {
+    finalChance = Math.min(baseChance * S * (cableFactor / 100) * 100, 100);
+  }
+
+  result.textContent = `Your estimated chance: ${finalChance.toFixed(2)}%`;
+
+  showAdvice(finalChance);
+drawChart(finalChance);
+explainFormula(P, G, W, S, cableFactor, finalChance);
+
+}
+
+
+    function showAdvice(chance, cableFactor) {
+  if (cableFactor === 100) {
+    advice.textContent = "Nepo babehhh! 💅👑";
+    return;
+  }
+
+  let line = "Keep trying!";
+  if (chance > 90) line = "You're the main character!";
+  else if (chance > 70) line = "You got this, darling!";
+  else if (chance > 40) line = "Not bad — pray a bit more!";
+  else if (chance > 20) line = "Hmm... maybe try networking?";
+  else line = "Better go solat hajat dulu.";
+
+  advice.textContent = line;
+}
+
+
+
+    function drawChart(chance) {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Your Chance', 'Others'],
+          datasets: [{
+            data: [chance, 100 - chance],
+            backgroundColor: ['#c8006b', '#fff'],  // 'Others' is white
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                font: {
+                  family: 'Josefin Slab'
+                },
+                color: '#fff'
+              }
+            }
+          }
+        }
+      });
+    }
+	
+	function explainFormula(P, G, W, S, cableFactor, finalChance) {
+  const box = document.getElementById('formulaBox');
+  if (cableFactor === 100) {
+    box.textContent = `💼 Bapak Hang's Company Selected\n🎯 Auto-selected due to 100% cable influence\n✅ Final Chance: 100% (Nepo Override)`;
+    return;
+  }
+
+  const totalWeight = G * 1 + W * 0.3;
+  const baseChance = P / totalWeight;
+  const multiplied = baseChance * S * (cableFactor / 100) * 100;
+
+  box.textContent = 
+`🔢 Formula Breakdown:
+
+Total weighted candidates:
+= (${G} × 1) + (${W} × 0.3)
+= ${G * 1} + ${W * 0.3} = ${totalWeight}
+
+Base chance:
+= ${P} / ${totalWeight} ≈ ${baseChance.toFixed(4)}
+
+Strength × Cable:
+= ${S} × ${cableFactor / 100} = ${(S * (cableFactor / 100)).toFixed(4)}
+
+Final chance:
+= ${baseChance.toFixed(4)} × ${S} × ${cableFactor / 100} × 100
+≈ ${multiplied.toFixed(2)}%
+✅ Capped at: ${finalChance.toFixed(2)}%`;
+}
+
+  </script>
+</body>
+</html>
