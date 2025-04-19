@@ -91,19 +91,19 @@
         padding: 10px;
       }
     }
-	
-	.formula-box {
-  background-color: #222;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 20px;
-  color: #ccc;
-  font-size: 14px;
-  text-align: left;
-  font-family: 'Josefin Slab', serif;
-  white-space: pre-line;
-  border: 1px solid #555;
-}
+
+    .formula-box {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 20px;
+      color: #ccc;
+      font-size: 14px;
+      text-align: left;
+      font-family: 'Josefin Slab', serif;
+      white-space: pre-line;
+      border: 1px solid #555;
+    }
   </style>
 </head>
 <body>
@@ -126,13 +126,49 @@
 
     <label for="cable">Cable Option (Your Network):</label>
     <select id="cable">
-	<option value="100">Kompeni Pak Hang</option>
-      <option value="9999">Executive</option>
-      <option value="9000">Manager/Officer</option>
-      <option value="4000">Family Member</option>
-      <option value="2500">Friends</option>
-	  <option value="1000">I'm So Lonely</option>
+      <option value="10000000000">Kompeni Pak Hang</option> <!--assume satu dunia 10b kotlah malas nak ubah code lol-->
+      <option value="999">Executive</option>
+      <option value="500">Manager/Officer</option>
+      <option value="100">Family Member</option>
+      <option value="50">Friends</option>
+      <option value="10">I'm So Lonely</option>
     </select>
+
+    <label for="qualification">Relevant Qualification:</label>
+    <select id="qualification">
+      <option value="5">Very</option>
+      <option value="4">Yeah</option>
+      <option value="2">Hmm</option>
+      <option value="1">Not So</option>
+    </select>
+
+    <label for="experience">Relevant Experience:</label>
+<select id="experience">
+  <option value="1">None</option>
+  <option value="2">Less than 1 year</option>
+  <option value="3">1-2 years</option>
+  <option value="4">2-3 years</option>
+  <option value="5">More than 3 years</option>
+</select>
+
+<label for="volunteer">Value of Volunteer Experience:</label>
+<select id="volunteer">
+  <option value="1">No Experience</option>
+  <option value="2">Minimal (less than 3 months)</option>
+  <option value="3">Occasional involvement</option>
+  <option value="4">Active contributor</option>
+  <option value="5">Leadership or major impact</option>
+</select>
+
+<label for="freelance">Value of Freelance Experience:</label>
+<select id="freelance">
+  <option value="1">No Freelance</option>
+  <option value="2">Small gigs (casual)</option>
+  <option value="3">Regular jobs (1-2 clients)</option>
+  <option value="4">Several clients or strong portfolio</option>
+  <option value="5">High-impact or niche freelance role</option>
+</select>
+
 
     <button onclick="calculate()">Calculate</button>
 
@@ -140,8 +176,11 @@
     <canvas id="myChart" width="400" height="400"></canvas>
     <div class="advice" id="advice"></div>
   </div>
-  
+
   <div class="formula-box" id="formulaBox"></div>
+  
+  <div class="formula-box" id="mathBreakdown"></div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -150,6 +189,10 @@
     const result = document.getElementById('result');
     const advice = document.getElementById('advice');
     const cableSelect = document.getElementById('cable');
+    const qualificationSelect = document.getElementById('qualification');
+    const experienceInput = document.getElementById('experience');
+    const volunteerInput = document.getElementById('volunteer');
+    const freelanceInput = document.getElementById('freelance');
 
     let chart;
 
@@ -158,50 +201,43 @@
     });
 
     function calculate() {
-  const P = parseFloat(document.getElementById('positions').value);
-  const G = parseFloat(document.getElementById('good').value);
-  const W = parseFloat(document.getElementById('bad').value);
-  const S = parseFloat(document.getElementById('strength').value);
-  const cableFactor = parseFloat(cableSelect.value);
-
-  const totalWeight = G * 1 + W * 0.3;
-  const baseChance = P / totalWeight;
-
-  let finalChance;
-
-  // If it's Bapak Hang’s Company (value is 100), force 100%
-  if (cableFactor === 100) {
-    finalChance = 100;
-  } else {
-    finalChance = Math.min(baseChance * S * (cableFactor / 100) * 100, 100);
-  }
-
-  result.textContent = `Your estimated chance: ${finalChance.toFixed(2)}%`;
-
-  showAdvice(finalChance);
-drawChart(finalChance);
-explainFormula(P, G, W, S, cableFactor, finalChance);
-
-}
+      const P = parseFloat(document.getElementById('positions').value);
+      const G = parseFloat(document.getElementById('good').value);
+      const W = parseFloat(document.getElementById('bad').value);
+      const S = parseFloat(document.getElementById('strength').value);
+      const cableFactor = parseFloat(cableSelect.value);
+      const qualificationFactor = parseFloat(qualificationSelect.value);
+      const experienceFactor = parseFloat(experienceInput.value);
+const volunteerFactor = parseFloat(volunteerInput.value);
+const freelanceFactor = parseFloat(freelanceInput.value);
 
 
-    function showAdvice(chance, cableFactor) {
-  if (cableFactor === 100) {
-    advice.textContent = "Nepo babehhh! 💅👑";
-    return;
-  }
+      const totalWeight = G * 1 + W * 0.3;
+      const baseChance = P / totalWeight;
 
-  let line = "Keep trying!";
-  if (chance > 90) line = "You're the main character!";
-  else if (chance > 70) line = "You got this, darling!";
-  else if (chance > 40) line = "Not bad — pray a bit more!";
-  else if (chance > 20) line = "Hmm... maybe try networking?";
-  else line = "Better go solat hajat dulu.";
+      let finalChance;
 
-  advice.textContent = line;
-}
+      // Qualification weight: Only relevant qualification is considered
+      finalChance = baseChance * S * (cableFactor / 100) * qualificationFactor * experienceFactor * volunteerFactor * freelanceFactor * 100;
 
+      finalChance = Math.min(finalChance, 100);
 
+      result.textContent = `Your estimated chance: ${finalChance.toFixed(2)}%`;
+
+      showAdvice(finalChance);
+      drawChart(finalChance);
+      explainFormula(P, G, W, S, cableFactor, qualificationFactor, experienceFactor, volunteerFactor, freelanceFactor, finalChance);
+    }
+
+    function showAdvice(chance) {
+      if (chance > 75) {
+        advice.textContent = 'You have a strong chance! Keep up the good work!';
+      } else if (chance > 50) {
+        advice.textContent = 'Your chances are decent. Keep improving your skills and network!';
+      } else {
+        advice.textContent = 'You might want to enhance your qualifications or network more!';
+      }
+    }
 
     function drawChart(chance) {
       const ctx = document.getElementById('myChart').getContext('2d');
@@ -210,59 +246,48 @@ explainFormula(P, G, W, S, cableFactor, finalChance);
       chart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Your Chance', 'Others'],
+          labels: ['Chance', 'Other'],
           datasets: [{
             data: [chance, 100 - chance],
-            backgroundColor: ['#c8006b', '#fff'],  // 'Others' is white
-            borderWidth: 0
+            backgroundColor: ['#c8006b', '#FFD700'],
+            borderColor: '#ffffff',
+            borderWidth: 1
           }]
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom',
-              labels: {
-                font: {
-                  family: 'Josefin Slab'
-                },
-                color: '#fff'
-              }
-            }
-          }
-        }
       });
     }
+
+    function explainFormula(P, G, W, S, cableFactor, qualificationFactor, experienceFactor, volunteerFactor, freelanceFactor, finalChance) {
+      const formulaText = `Formula:
+      Final Chance = (P / (G + W * 0.3)) * Strength * Network Factor * Qualification Factor * Experience Factor * Volunteer Factor * Freelance Factor
+      Final Chance = ${finalChance.toFixed(2)}%`;
+      document.getElementById('formulaBox').textContent = formulaText;
+    }
 	
-	function explainFormula(P, G, W, S, cableFactor, finalChance) {
-  const box = document.getElementById('formulaBox');
-  if (cableFactor === 100) {
-    box.textContent = `💼 Bapak Hang's Company Selected\n🎯 Auto-selected due to 100% cable influence\n✅ Final Chance: 100% (Nepo Override)`;
-    return;
-  }
+	function explainFormula(P, G, W, S, cableFactor, qualificationFactor, experienceFactor, volunteerFactor, freelanceFactor, finalChance) {
+  const baseChance = P / (G + W * 0.3);
+  const strengthPart = baseChance * S;
+  const networkPart = strengthPart * (cableFactor / 100);
+  const qualificationPart = networkPart * qualificationFactor;
+  const experiencePart = qualificationPart * experienceFactor;
+  const volunteerPart = experiencePart * volunteerFactor;
+  const freelancePart = volunteerPart * freelanceFactor;
+  const limitedFinal = Math.min(freelancePart * 100, 100);
 
-  const totalWeight = G * 1 + W * 0.3;
-  const baseChance = P / totalWeight;
-  const multiplied = baseChance * S * (cableFactor / 100) * 100;
+  const formulaText = `Formula:
+Final Chance = (P / (G + W * 0.3)) * Strength * Network Factor * Qualification Factor * Experience Factor * Volunteer Factor * Freelance Factor
+Final Chance = (${P} / (${G} + ${W} * 0.3)) * ${S} * (${cableFactor} / 100) * ${qualificationFactor} * ${experienceFactor} * ${volunteerFactor} * ${freelanceFactor}
+Base Chance = ${baseChance.toFixed(4)}
+After Strength = ${strengthPart.toFixed(4)}
+After Network Factor = ${networkPart.toFixed(4)}
+After Qualification Factor = ${qualificationPart.toFixed(4)}
+After Experience Factor = ${experiencePart.toFixed(4)}
+After Volunteer Factor = ${volunteerPart.toFixed(4)}
+After Freelance Factor = ${freelancePart.toFixed(4)}
+Final Chance = ${limitedFinal.toFixed(2)}%`;
 
-  box.textContent = 
-`🔢 Formula Breakdown:
-
-Total weighted candidates:
-= (${G} × 1) + (${W} × 0.3)
-= ${G * 1} + ${W * 0.3} = ${totalWeight}
-
-Base chance:
-= ${P} / ${totalWeight} ≈ ${baseChance.toFixed(4)}
-
-Strength × Cable:
-= ${S} × ${cableFactor / 100} = ${(S * (cableFactor / 100)).toFixed(4)}
-
-Final chance:
-= ${baseChance.toFixed(4)} × ${S} × ${cableFactor / 100} × 100
-≈ ${multiplied.toFixed(2)}%
-✅ Capped at: ${finalChance.toFixed(2)}%`;
+  document.getElementById('formulaBox').textContent = "Summary Formula:\n" + `Final Chance = ${limitedFinal.toFixed(2)}%`;
+  document.getElementById('mathBreakdown').textContent = formulaText;
 }
 
   </script>
